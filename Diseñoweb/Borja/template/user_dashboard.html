@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BORJA ... | Panel de Usuario</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root {
+            --sidebar-width: 260px;
+            --bg-body: #13151b;
+            --bg-panel: #1a1d24;
+            --bg-hover: #262a33;
+            --text-primary: #ffffff;
+            --text-secondary: #8b8e98;
+            --accent-green: #b3ff00;
+            --accent-green-dim: rgba(179, 255, 0, 0.1);
+            --accent-blue: #00bfff;
+            --border-color: #2a2e39;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+        }
+
+        .cursor-shadow {
+            position: fixed;
+            top: -50px;
+            left: -50px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent-green, #b3ff00);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 20px 10px var(--accent-green, #b3ff00);
+            transform: translate(-50%, -50%);
+            transition: top 0.1s ease-out, left 0.1s ease-out;
+            opacity: 0.6;
+        }
+
+        .dashboard-shell {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar del Usuario */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-body);
+            border-right: 1px solid var(--border-color);
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 20px 20px 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .logo-icon {
+            background-color: var(--accent-blue);
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-section {
+            margin-top: 20px;
+        }
+
+        .nav-section-title {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 20px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar nav a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .sidebar nav a:hover,
+        .sidebar nav a.active {
+            color: var(--accent-blue);
+            background-color: rgba(0, 191, 255, 0.1);
+            border-right: 3px solid var(--accent-blue);
+        }
+
+        .sidebar nav a i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Perfil de Usuario */
+        .user-profile-bottom {
+            margin-top: auto;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .user-profile-bottom .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: var(--accent-blue);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .user-profile-bottom .info p {
+            margin: 0;
+            font-size: 0.85rem;
+        }
+
+        .user-profile-bottom .info span {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background-color: var(--bg-body);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-panel);
+            border-radius: 8px;
+            padding: 8px 15px;
+            width: 300px;
+        }
+
+        .search-bar i {
+            color: var(--text-secondary);
+            margin-right: 10px;
+        }
+
+        .search-bar input {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            outline: none;
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            transition: opacity 0.2s;
+        }
+
+        .btn-icon:hover {
+            opacity: 0.8;
+        }
+
+        .content-area {
+            padding: 30px;
+            flex: 1;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        /* Grid de Productos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+        }
+
+        .product-icon {
+            font-size: 3rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: var(--accent-green);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn-buy {
+            width: 100%;
+            background-color: var(--accent-blue);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Tablas de Usuario */
+        .dashboard-panel {
+            display: none;
+        }
+
+        .dashboard-panel.active {
+            display: block;
+        }
+
+        .crud-panel {
+            background-color: var(--bg-panel);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .crud-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .crud-header h2 {
+            font-size: 1.2rem;
+            margin: 0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-blue);
+        }
+
+        .table-dark-custom {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-primary);
+        }
+
+        .table-dark-custom th {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px 20px;
+            text-align: left;
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .table-dark-custom td {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+            font-size: 0.9rem;
+        }
+
+        .badge-status {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            background-color: rgba(0, 191, 255, 0.1);
+            color: var(--accent-blue);
+        }
+
+        .dashboard-footer {
+            background-color: var(--bg-panel);
+            border-top: 1px solid var(--border-color);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard-shell">
+        <!-- Sidebar Usuario -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="logo-icon"><i class="fa-solid fa-user"></i></div>
+                Mi Portal
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title">Mi Cuenta</div>
+                <nav>
+                    <a href="#panel-catalogo" class="active"><i class="fa-solid fa-store"></i> Catálogo de Productos</a>
+                    <a href="#panel-carrito"><i class="fa-solid fa-cart-shopping"></i> Mi Carrito</a>
+                    <a href="#panel-pedidos"><i class="fa-solid fa-box"></i> Mis Pedidos</a>
+                </nav>
+            </div>
+            <a href="/" class="user-profile-bottom">
+                <div class="avatar">US</div>
+                <div class="info">
+                    <p>Cliente</p><span>Cerrar Sesión</span>
+                </div>
+                <i class="fa-solid fa-right-from-bracket" style="margin-left: auto; color: #ff4d4d;"></i>
+            </a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn text-white d-md-none"><i class="fa-solid fa-bars"></i></button>
+                    <div class="search-bar">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Buscar productos...">
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <a href="/" title="Cerrar Sesión" class="btn-icon"
+                        style="background-color: var(--border-color); color: var(--text-secondary); text-decoration: none;">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </a>
+                    <div
+                        style="width: 30px; height: 30px; border-radius: 50%; background-color: var(--accent-blue); color: #fff; display: flex; justify-content: center; align-items: center; font-size: 0.8rem; font-weight: bold;">
+                        US</div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="content-area">
+                <div class="page-header">
+                    <div>
+                        <p style="margin-bottom: 5px;"><span style="color:var(--text-secondary)">Bienvenido de
+                                vuelta</span></p>
+                        <h1>Portal de Cliente</h1>
+                    </div>
+                </div>
+
+                <!-- Panel Catálogo -->
+                <div id="panel-catalogo" class="dashboard-panel active" style="margin-bottom: 40px;">
+                    <h2 style="font-size: 1.3rem; margin-bottom: 20px;"><i class="fa-solid fa-store"
+                            style="color: var(--accent-blue);"></i> Productos Destacados</h2>
+                    <div class="products-grid">
+                        <!-- Producto 1 -->
+                        <div class="product-card">
+                            <div class="product-icon"><i class="fa-solid fa-laptop"></i></div>
+                            <div class="product-title">Laptop Gamer RTX 3060</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 10px;">
+                                Categoría: Computación</div>
+                            <div class="product-price">$ 1,200.00</div>
+                            <button class="btn-buy"><i class="fa-solid fa-cart-plus"></i> Añadir al Carrito</button>
+                        </div>
+                        <!-- Producto 2 -->
+                        <div class="product-card">
+                            <div class="product-icon"><i class="fa-solid fa-keyboard"></i></div>
+                            <div class="product-title">Teclado Mecánico RGB</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 10px;">
+                                Categoría: Accesorios</div>
+                            <div class="product-price">$ 85.00</div>
+                            <button class="btn-buy"><i class="fa-solid fa-cart-plus"></i> Añadir al Carrito</button>
+                        </div>
+                        <!-- Producto 3 -->
+                        <div class="product-card">
+                            <div class="product-icon"><i class="fa-solid fa-headphones"></i></div>
+                            <div class="product-title">Audífonos Inalámbricos</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 10px;">
+                                Categoría: Audio</div>
+                            <div class="product-price">$ 120.00</div>
+                            <button class="btn-buy"><i class="fa-solid fa-cart-plus"></i> Añadir al Carrito</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel Mi Carrito -->
+                <div class="crud-panel dashboard-panel" id="panel-carrito">
+                    <div class="crud-header">
+                        <h2><i class="fa-solid fa-cart-shopping"></i> Mi Carrito Actual</h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table-dark-custom">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Subtotal</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Laptop Gamer RTX 3060</td>
+                                    <td>1</td>
+                                    <td>$ 1,200.00</td>
+                                    <td>$ 1,200.00</td>
+                                    <td><button class="btn-icon btn-delete"
+                                            style="background: #ff4d4d; border:none; border-radius:4px; padding:5px 10px; color:white;"><i
+                                                class="fa-solid fa-trash"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="text-align: right; font-weight: bold;">Total Estimado:</td>
+                                    <td style="font-weight: bold; color: var(--accent-green);">$ 1,200.00</td>
+                                    <td><button class="btn-buy" style="padding: 5px 15px; font-size: 0.9rem;">Proceder
+                                            al Pago</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Panel Mis Pedidos -->
+                <div class="crud-panel dashboard-panel" id="panel-pedidos">
+                    <div class="crud-header">
+                        <h2><i class="fa-solid fa-box"></i> Historial de Pedidos</h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table-dark-custom">
+                            <thead>
+                                <tr>
+                                    <th>ID Pedido</th>
+                                    <th>Fecha</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                    <th>Detalles</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="text-secondary">#PED-001</span></td>
+                                    <td>15/05/2026</td>
+                                    <td>$ 85.00</td>
+                                    <td><span class="badge-status"
+                                            style="background-color: rgba(179, 255, 0, 0.1); color: var(--accent-green);">Completado</span>
+                                    </td>
+                                    <td><button class="btn-icon" style="background: var(--border-color);"><i
+                                                class="fa-solid fa-eye"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <footer class="dashboard-footer">
+                <div>&copy; 2026 BORJA... Portal de Cliente.</div>
+                <div>Soporte Técnico</div>
+            </footer>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.sidebar nav a');
+            const panels = document.querySelectorAll('.dashboard-panel');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId.startsWith('#')) {
+                        e.preventDefault();
+
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+
+                        panels.forEach(p => p.classList.remove('active'));
+                        const targetPanel = document.querySelector(targetId);
+                        if (targetPanel) {
+                            targetPanel.classList.add('active');
+                        }
+                    }
+                });
+            });
+        });
+
+        // Sombra del cursor
+        const cursorShadow = document.createElement('div');
+        cursorShadow.classList.add('cursor-shadow');
+        document.body.appendChild(cursorShadow);
+
+        document.addEventListener('mousemove', (e) => {
+            cursorShadow.style.left = e.clientX + 'px';
+            cursorShadow.style.top = e.clientY + 'px';
+        });
+    </script>
+</body>
+
+</html>

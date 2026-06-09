@@ -1,0 +1,268 @@
+<!-- Modal de Configuración -->
+<div class="modal fade" id="configuracionModal" tabindex="-1" aria-labelledby="configuracionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow-lg border-0" style="border-radius: 16px; background-color: var(--bs-body-bg);">
+            <!-- Modal Header -->
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold d-flex align-items-center gap-2" id="configuracionModalLabel" style="color: var(--bs-warning);">
+                    <i class="bi bi-gear-fill"></i> Panel de Configuración
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <!-- Modal Body with Tabs -->
+            <div class="modal-body pt-3">
+                <ul class="nav nav-tabs border-bottom mb-3" id="configTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active fw-semibold d-flex align-items-center gap-2" id="general-tab" data-bs-toggle="tab" data-bs-target="#general-pane" type="button" role="tab" aria-controls="general-pane" aria-selected="true">
+                            <i class="bi bi-sliders"></i> General
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link fw-semibold d-flex align-items-center gap-2" id="apariencia-tab" data-bs-toggle="tab" data-bs-target="#apariencia-pane" type="button" role="tab" aria-controls="apariencia-pane" aria-selected="false">
+                            <i class="bi bi-palette-fill"></i> Apariencia
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link fw-semibold d-flex align-items-center gap-2" id="seguridad-tab" data-bs-toggle="tab" data-bs-target="#seguridad-pane" type="button" role="tab" aria-controls="seguridad-pane" aria-selected="false">
+                            <i class="bi bi-shield-lock-fill"></i> Seguridad
+                        </button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="configTabContent">
+                    <!-- Tab 1: General Settings -->
+                    <div class="tab-pane fade show active" id="general-pane" role="tabpanel" aria-labelledby="general-tab" tabindex="0">
+                        <form id="generalSettingsForm">
+                            <div class="mb-3">
+                                <label for="siteTitleInput" class="form-label fw-semibold">Nombre del Sitio (Brand)</label>
+                                <input type="text" class="form-control" id="siteTitleInput" placeholder="Ej. BORJA.." style="border-radius: 8px;">
+                                <div class="form-text">Cambia el título que se muestra en la barra lateral del panel.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="footerCopyrightInput" class="form-label fw-semibold">Texto de Copyright (Footer)</label>
+                                <input type="text" class="form-control" id="footerCopyrightInput" placeholder="Ej. BORJA derechos reservados 2026 &copy;" style="border-radius: 8px;">
+                                <div class="form-text">Personaliza el texto de derechos de autor en el pie de página. Puedes usar HTML como <code>&amp;copy;</code>.</div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Tab 2: Appearance Settings -->
+                    <div class="tab-pane fade" id="apariencia-pane" role="tabpanel" aria-labelledby="apariencia-tab" tabindex="0">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold d-block">Tema del Panel</label>
+                            <div class="btn-group w-100" role="group" aria-label="Theme selection">
+                                <button type="button" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2 py-2" onclick="setAppTheme('light')">
+                                    <i class="bi bi-sun-fill text-warning"></i> Claro
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2 py-2" onclick="setAppTheme('dark')">
+                                    <i class="bi bi-moon-fill text-primary"></i> Oscuro
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2 py-2" onclick="setAppTheme('auto')">
+                                    <i class="bi bi-circle-half text-info"></i> Auto
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Color del Menú Lateral</label>
+                            <div class="d-flex gap-2 flex-wrap mt-1">
+                                <button type="button" class="btn-color-preset rounded-circle border-0 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background-color: #212529; color: white;" onclick="setSidebarTheme('bg-dark')" title="Oscuro">
+                                    <i class="bi bi-check-lg sidebar-check-icon d-none" id="check-bg-dark"></i>
+                                </button>
+                                <button type="button" class="btn-color-preset rounded-circle border-0 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background-color: #f8f9fa; border: 1px solid #dee2e6 !important;" onclick="setSidebarTheme('bg-light')" title="Claro">
+                                    <i class="bi bi-check-lg sidebar-check-icon d-none text-dark" id="check-bg-light"></i>
+                                </button>
+                                <button type="button" class="btn-color-preset rounded-circle border-0 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background-color: #0d6efd; color: white;" onclick="setSidebarTheme('bg-primary')" title="Azul">
+                                    <i class="bi bi-check-lg sidebar-check-icon d-none" id="check-bg-primary"></i>
+                                </button>
+                                <button type="button" class="btn-color-preset rounded-circle border-0 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background-color: #198754; color: white;" onclick="setSidebarTheme('bg-success')" title="Verde">
+                                    <i class="bi bi-check-lg sidebar-check-icon d-none" id="check-bg-success"></i>
+                                </button>
+                                <button type="button" class="btn-color-preset rounded-circle border-0 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background-color: #ffc107; color: black;" onclick="setSidebarTheme('bg-warning')" title="Amarillo">
+                                    <i class="bi bi-check-lg sidebar-check-icon d-none" id="check-bg-warning"></i>
+                                </button>
+                                <button type="button" class="btn-color-preset rounded-circle border-0 d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background-color: #dc3545; color: white;" onclick="setSidebarTheme('bg-danger')" title="Rojo">
+                                    <i class="bi bi-check-lg sidebar-check-icon d-none" id="check-bg-danger"></i>
+                                </button>
+                            </div>
+                            <div class="form-text mt-2">Personaliza el fondo de la barra de navegación lateral.</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab 3: Security Settings -->
+                    <div class="tab-pane fade" id="seguridad-pane" role="tabpanel" aria-labelledby="seguridad-tab" tabindex="0">
+                        <form id="securitySettingsForm">
+                            <div class="mb-3">
+                                <label for="adminPasswordInput" class="form-label fw-semibold">Nueva Contraseña del Administrador</label>
+                                <input type="password" class="form-control" id="adminPasswordInput" placeholder="Dejar en blanco para no cambiar" style="border-radius: 8px;">
+                                <div class="form-text">Simula el cambio de credenciales de seguridad para la cuenta de administración.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirmPasswordInput" class="form-label fw-semibold">Confirmar Contraseña</label>
+                                <input type="password" class="form-control" id="confirmPasswordInput" placeholder="Confirmar contraseña" style="border-radius: 8px;">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Feedback Alert -->
+                <div class="alert alert-success d-none mt-3" id="configSuccessAlert" role="alert" style="border-radius: 8px;">
+                    <i class="bi bi-check-circle-fill me-2"></i> ¡Configuraciones guardadas y aplicadas correctamente!
+                </div>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="modal-footer border-top-0 pt-0">
+                <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal" style="border-radius: 8px;">Cancelar</button>
+                <button type="button" class="btn btn-warning px-4 text-dark fw-bold" onclick="saveConfiguration()" style="border-radius: 8px;">
+                    Guardar Cambios
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Variables de configuración cargadas de localStorage
+    document.addEventListener('DOMContentLoaded', function() {
+        loadAndApplyConfig();
+    });
+
+    function loadAndApplyConfig() {
+        // Cargar Nombre de Sitio
+        const savedTitle = localStorage.getItem('panelSiteTitle') || 'BORJA..';
+        const brandTextEl = document.querySelector('.brand-text');
+        if (brandTextEl) {
+            brandTextEl.textContent = savedTitle;
+        }
+        const titleInput = document.getElementById('siteTitleInput');
+        if (titleInput) {
+            titleInput.value = savedTitle;
+        }
+
+        // Cargar Copyright
+        const savedCopyright = localStorage.getItem('panelCopyrightText') || 'BORJA derechos reservados 2026 &copy;';
+        const footerCopyrightEl = document.querySelector('.app-footer strong');
+        if (footerCopyrightEl) {
+            footerCopyrightEl.innerHTML = savedCopyright;
+        }
+        const copyrightInput = document.getElementById('footerCopyrightInput');
+        if (copyrightInput) {
+            copyrightInput.value = savedCopyright.replace(/&copy;/g, '©');
+        }
+
+        // Cargar Tema Lateral (Sidebar)
+        const savedSidebarTheme = localStorage.getItem('panelSidebarTheme') || 'bg-body-secondary';
+        applySidebarThemeClass(savedSidebarTheme);
+    }
+
+    function applySidebarThemeClass(themeClass) {
+        const sidebarEl = document.querySelector('.app-sidebar');
+        if (sidebarEl) {
+            // Eliminar clases de color previas
+            sidebarEl.classList.remove('bg-body-secondary', 'bg-dark', 'bg-light', 'bg-primary', 'bg-success', 'bg-warning', 'bg-danger');
+            
+            // Si es bg-light, cambiar el data-bs-theme de la sidebar a light
+            if (themeClass === 'bg-light') {
+                sidebarEl.setAttribute('data-bs-theme', 'light');
+            } else {
+                sidebarEl.setAttribute('data-bs-theme', 'dark');
+            }
+            
+            sidebarEl.classList.add(themeClass);
+        }
+
+        // Actualizar la marca visual de check en los círculos del modal
+        document.querySelectorAll('.sidebar-check-icon').forEach(icon => icon.classList.add('d-none'));
+        
+        let presetId = 'check-' + themeClass;
+        if (themeClass === 'bg-body-secondary') presetId = 'check-bg-dark';
+        
+        const checkIcon = document.getElementById(presetId);
+        if (checkIcon) {
+            checkIcon.classList.remove('d-none');
+        }
+    }
+
+    let selectedSidebarTheme = localStorage.getItem('panelSidebarTheme') || 'bg-body-secondary';
+
+    function setSidebarTheme(themeClass) {
+        selectedSidebarTheme = themeClass;
+        // Marcar visualmente el círculo seleccionado en tiempo real en la UI del modal
+        document.querySelectorAll('.sidebar-check-icon').forEach(icon => icon.classList.add('d-none'));
+        const checkIcon = document.getElementById('check-' + themeClass);
+        if (checkIcon) {
+            checkIcon.classList.remove('d-none');
+        }
+    }
+
+    function setAppTheme(themeValue) {
+        // Integrar con el selector de tema de AdminLTE existente
+        const themeBtn = document.querySelector(`[data-bs-theme-value="${themeValue}"]`);
+        if (themeBtn) {
+            themeBtn.click();
+        } else {
+            // Si no encuentra el botón de AdminLTE, lo hace manualmente
+            localStorage.setItem('lte-theme', themeValue);
+            const resolved = themeValue === 'auto' ? 
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : 
+                themeValue;
+            document.documentElement.setAttribute('data-bs-theme', resolved);
+            
+            // Sincronizar iconos
+            document.querySelectorAll('[data-lte-theme-icon]').forEach(icon => {
+                icon.classList.toggle('d-none', icon.dataset.lteThemeIcon !== themeValue);
+            });
+        }
+    }
+
+    function saveConfiguration() {
+        const titleInput = document.getElementById('siteTitleInput');
+        const copyrightInput = document.getElementById('footerCopyrightInput');
+        const adminPasswordInput = document.getElementById('adminPasswordInput');
+        const confirmPasswordInput = document.getElementById('confirmPasswordInput');
+        const successAlert = document.getElementById('configSuccessAlert');
+
+        // Validar contraseñas si se escribió algo
+        if (adminPasswordInput.value) {
+            if (adminPasswordInput.value !== confirmPasswordInput.value) {
+                alert('Las contraseñas no coinciden.');
+                return;
+            }
+        }
+
+        // Guardar valores en localStorage
+        if (titleInput) {
+            localStorage.setItem('panelSiteTitle', titleInput.value);
+            const brandTextEl = document.querySelector('.brand-text');
+            if (brandTextEl) brandTextEl.textContent = titleInput.value;
+        }
+
+        if (copyrightInput) {
+            // Reemplazar el signo de copyright por la entidad HTML para compatibilidad
+            let value = copyrightInput.value.replace(/©/g, '&copy;');
+            localStorage.setItem('panelCopyrightText', value);
+            const footerCopyrightEl = document.querySelector('.app-footer strong');
+            if (footerCopyrightEl) footerCopyrightEl.innerHTML = value;
+        }
+
+        // Guardar tema de sidebar seleccionado
+        localStorage.setItem('panelSidebarTheme', selectedSidebarTheme);
+        applySidebarThemeClass(selectedSidebarTheme);
+
+        // Mostrar alerta de éxito
+        if (successAlert) {
+            successAlert.classList.remove('d-none');
+            setTimeout(() => {
+                successAlert.classList.add('d-none');
+                // Cerrar modal después de 1 segundo
+                const modalEl = document.getElementById('configuracionModal');
+                const modal = bootstrap.Modal.getInstance(modalEl);
+                if (modal) {
+                    modal.hide();
+                }
+            }, 1200);
+        }
+    }
+</script>

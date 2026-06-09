@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BORJA ....</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- El CSS original que extrajimos -->
+    {% include 'complementos/css.html' %}
+</head>
+<body>
+
+<div class="dashboard-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo-area">
+            <div class="logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            BORJA ....
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Principal</div>
+            <nav>
+                <a href="#panel-persona" class="active"><i class="fa-solid fa-users"></i> Personas</a>
+                <a href="#panel-perfil"><i class="fa-solid fa-id-card"></i> Perfiles</a>
+                <a href="#panel-rol"><i class="fa-solid fa-user-tie"></i> Roles</a>
+                <a href="#panel-icono"><i class="fa-solid fa-icons"></i> Iconos</a>
+                <a href="#panel-rolpermiso"><i class="fa-solid fa-key"></i> Roles y Permisos</a>
+                <a href="#panel-categoria"><i class="fa-solid fa-tags"></i> Categorías</a>
+                <a href="#panel-marca"><i class="fa-solid fa-copyright"></i> Marcas</a>
+                <a href="#panel-proveedor"><i class="fa-solid fa-truck-field"></i> Proveedores</a>
+                <a href="#panel-descuento"><i class="fa-solid fa-percent"></i> Descuentos</a>
+                <a href="#panel-producto"><i class="fa-solid fa-box"></i> Productos</a>
+                <a href="#panel-carrito"><i class="fa-solid fa-cart-shopping"></i> Carritos</a>
+                <a href="#panel-detallecarrito"><i class="fa-solid fa-cart-arrow-down"></i> Detalles Carrito</a>
+                <a href="#panel-pedido"><i class="fa-solid fa-file-invoice-dollar"></i> Pedidos</a>
+                <a href="#panel-detallepedido"><i class="fa-solid fa-receipt"></i> Detalles Pedido</a>
+                <a href="#panel-pago"><i class="fa-solid fa-money-bill-wave"></i> Pagos</a>
+            </nav>
+        </div>
+
+        <div class="user-profile-bottom">
+            <div class="avatar">US</div>
+            <div class="info">
+                <p>Usuario Admin</p>
+                <span>Administrador</span>
+            </div>
+            <a href="{% url 'salir' %}" style="margin-left: auto; color: #ff4d4d;"><i class="fa-solid fa-right-from-bracket"></i></a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Header -->
+        <header class="top-header">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Buscar registros...">
+            </div>
+            <div class="header-actions">
+                <a href="{% url 'salir' %}" class="btn-icon" style="background-color: var(--border-color); color: white;"><i class="fa-solid fa-right-from-bracket"></i></a>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="content-area">
+            <div class="page-header">
+                <div>
+                    <p style="margin-bottom: 5px;"><span style="color:var(--text-secondary)">Management Portal</span></p>
+                    <h1>SISTEMAS DASHBOARD BORJA</h1>
+                </div>
+            </div>
+
+            <!-- Panel Persona -->
+            <div class="crud-panel active dashboard-panel" id="panel-persona">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-users"></i> Gestión de Personas</h2>
+                    <a href="{% url 'crear_persona' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nueva Persona</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in per %}
+                            <tr>
+                                <td>{{ p.nombre }}</td>
+                                <td>{{ p.apellido }}</td>
+                                <td><span class="badge-status badge-active">Activo</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="btn-icon btn-view"><i class="fa-solid fa-eye"></i></button>
+                                        <a href="{% url 'editar_persona' p.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_persona' p.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel Rol -->
+            <div class="crud-panel dashboard-panel" id="panel-rol">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-user-tie"></i> Gestión de Roles</h2>
+                    <a href="{% url 'crear_rol' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nuevo Rol</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Nombre del Rol</th>
+                                <th>Descripción</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in rol %}
+                            <tr>
+                                <td>{{ r.nombre }}</td>
+                                <td>{{ r.descripcion }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_rol' r.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_rol' r.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel Perfil -->
+            <div class="crud-panel dashboard-panel" id="panel-perfil">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-id-card"></i> Gestión de Perfiles</h2>
+                    <a href="{% url 'crear_perfil' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nuevo Perfil</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Persona</th>
+                                <th>Rol</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pe in perfiles %}
+                            <tr>
+                                <td>{{ pe.persona.nombre }}</td>
+                                <td>{{ pe.rol.nombre }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_perfil' pe.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_perfil' pe.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel Icono -->
+            <div class="crud-panel dashboard-panel" id="panel-icono">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-icons"></i> Gestión de Iconos</h2>
+                    <a href="{% url 'crear_icono' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nuevo Icono</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Nombre del Icono</th>
+                                <th>Clase (FontAwesome)</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in icon %}
+                            <tr>
+                                <td>{{ i.nombre }}</td>
+                                <td><i class="{{ i.clase }}"></i> {{ i.clase }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_icono' i.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_icono' i.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel RolPermiso -->
+            <div class="crud-panel dashboard-panel" id="panel-rolpermiso">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-key"></i> Roles y Permisos</h2>
+                    <a href="{% url 'crear_rolpermiso' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nuevo Permiso</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Rol</th>
+                                <th>Permiso</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rp in rolpermiso %}
+                            <tr>
+                                <td>{{ rp.rol.nombre }}</td>
+                                <td>{{ rp.permiso }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_rolpermiso' rp.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_rolpermiso' rp.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel Categoria -->
+            <div class="crud-panel dashboard-panel" id="panel-categoria">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-tags"></i> Gestión de Categorías</h2>
+                    <a href="{% url 'crear_categoria' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nueva Categoría</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for c in categorias %}
+                            <tr>
+                                <td>{{ c.nombre }}</td>
+                                <td>{{ c.descripcion }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_categoria' c.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_categoria' c.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel Marca -->
+            <div class="crud-panel dashboard-panel" id="panel-marca">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-copyright"></i> Gestión de Marcas</h2>
+                    <a href="{% url 'crear_marca' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nueva Marca</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>País</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for m in marcas %}
+                            <tr>
+                                <td>{{ m.nombre }}</td>
+                                <td>{{ m.pais }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_marca' m.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_marca' m.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel Proveedor -->
+            <div class="crud-panel dashboard-panel" id="panel-proveedor">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-truck-field"></i> Gestión de Proveedores</h2>
+                    <a href="{% url 'crear_proveedor' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nuevo Proveedor</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Contacto</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in proveedores %}
+                            <tr>
+                                <td>{{ p.nombre }}</td>
+                                <td>{{ p.contacto }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_proveedor' p.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_proveedor' p.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel Descuento -->
+            <div class="crud-panel dashboard-panel" id="panel-descuento">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-percent"></i> Gestión de Descuentos</h2>
+                    <a href="{% url 'crear_descuento' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nuevo Descuento</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Porcentaje</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for d in descuentos %}
+                            <tr>
+                                <td>{{ d.codigo }}</td>
+                                <td>{{ d.porcentaje }}%</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_descuento' d.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_descuento' d.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel Producto -->
+            <div class="crud-panel dashboard-panel" id="panel-producto">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-box"></i> Gestión de Productos</h2>
+                    <a href="{% url 'crear_producto' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nuevo Producto</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in productos %}
+                            <tr>
+                                <td>{{ p.nombre }}</td>
+                                <td>${{ p.precio }}</td>
+                                <td>{{ p.stock }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_producto' p.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_producto' p.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel Carrito -->
+            <div class="crud-panel dashboard-panel" id="panel-carrito">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-cart-shopping"></i> Gestión de Carritos</h2>
+                    <a href="{% url 'crear_carrito' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nuevo Carrito</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Fecha Creación</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for c in carritos %}
+                            <tr>
+                                <td>{{ c.usuario }}</td>
+                                <td>{{ c.fecha_creacion }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_carrito' c.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_carrito' c.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel DetalleCarrito -->
+            <div class="crud-panel dashboard-panel" id="panel-detallecarrito">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-cart-arrow-down"></i> Detalles de Carritos</h2>
+                    <a href="{% url 'crear_detallecarrito' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nuevo Detalle</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Carrito</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dc in detallecarritos %}
+                            <tr>
+                                <td>{{ dc.carrito }}</td>
+                                <td>{{ dc.producto }}</td>
+                                <td>{{ dc.cantidad }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_detallecarrito' dc.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_detallecarrito' dc.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel Pedido -->
+            <div class="crud-panel dashboard-panel" id="panel-pedido">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-file-invoice-dollar"></i> Gestión de Pedidos</h2>
+                    <a href="{% url 'crear_pedido' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nuevo Pedido</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>ID Pedido</th>
+                                <th>Usuario</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in pedidos %}
+                            <tr>
+                                <td>{{ p.id }}</td>
+                                <td>{{ p.usuario }}</td>
+                                <td>{{ p.estado }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_pedido' p.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_pedido' p.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel DetallePedido -->
+            <div class="crud-panel dashboard-panel" id="panel-detallepedido">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-receipt"></i> Detalles de Pedidos</h2>
+                    <a href="{% url 'crear_detallepedido' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nuevo Detalle</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Pedido</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dp in detallepedidos %}
+                            <tr>
+                                <td>{{ dp.pedido }}</td>
+                                <td>{{ dp.producto }}</td>
+                                <td>{{ dp.cantidad }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_detallepedido' dp.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_detallepedido' dp.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Panel Pago -->
+            <div class="crud-panel dashboard-panel" id="panel-pago">
+                <div class="crud-header">
+                    <h2><i class="fa-solid fa-money-bill-wave"></i> Gestión de Pagos</h2>
+                    <a href="{% url 'crear_pago' %}" class="btn-new"><i class="fa-solid fa-plus"></i> Nuevo Pago</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table-dark-custom">
+                        <thead>
+                            <tr>
+                                <th>Pedido</th>
+                                <th>Monto</th>
+                                <th>Método</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in pagos %}
+                            <tr>
+                                <td>{{ p.pedido }}</td>
+                                <td>${{ p.monto }}</td>
+                                <td>{{ p.metodo }}</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <a href="{% url 'editar_pago' p.id %}" class="btn-icon btn-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'eliminar_pago' p.id %}" class="btn-icon btn-delete"><i class="fa-solid fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="dashboard-footer">
+            <div>&copy; 2026 BORJA.... Todos los derechos reservados.</div>
+            <div class="footer-links">
+                <a href="#">Privacidad</a>
+                <a href="#">Términos</a>
+            </div>
+        </footer>
+    </main>
+</div>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const navLinks = document.querySelectorAll('.sidebar nav a');
+        const panels = document.querySelectorAll('.dashboard-panel');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    e.preventDefault();
+                    
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    panels.forEach(p => p.classList.remove('active'));
+                    const targetPanel = document.querySelector(targetId);
+                    if (targetPanel) {
+                        targetPanel.classList.add('active');
+                    }
+                }
+            });
+        });
+    });
+
+    // Sombra del cursor (lettuce-green)
+    const cursorShadow = document.createElement('div');
+    cursorShadow.classList.add('cursor-shadow');
+    document.body.appendChild(cursorShadow);
+
+    document.addEventListener('mousemove', (e) => {
+        cursorShadow.style.left = e.clientX + 'px';
+        cursorShadow.style.top = e.clientY + 'px';
+    });
+</script>
+
+</body>
+</html>

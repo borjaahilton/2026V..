@@ -1,0 +1,159 @@
+{% load static %}
+<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+    <!--begin::Sidebar Brand-->
+    <div class="sidebar-brand">
+        <!--begin::Brand Link-->
+        <a href="{% url 'dashboard' %}" class="brand-link">
+            <!--begin::Brand Image-->
+            <img src="{% static 'assets/img/AdminLTELogo.png' %}" alt="AdminLTE Logo"
+                class="brand-image opacity-75 shadow" />
+            <!--end::Brand Image-->
+            <!--begin::Brand Text-->
+            <span class="brand-text fw-light">BORJA..</span>
+            <!--end::Brand Text-->
+        </a>
+        <!--end::Brand Link-->
+    </div>
+    <!--end::Sidebar Brand-->
+    <!--begin::Sidebar Wrapper-->
+    <div class="sidebar-wrapper">
+        <nav class="mt-2">
+            <!-- Docs CTA -->
+            <div class="px-3 pb-2">
+                <a href="{% url 'dashboard' %}"
+                    class="btn btn-sm btn-outline-light w-100 d-flex align-items-center justify-content-center gap-2">
+                    <i class="bi bi-book" aria-hidden="true"></i>
+                    SIDEBAR
+                </a>
+            </div>
+
+            <!--begin::Sidebar Menu-->
+            <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation"
+                aria-label="Main navigation" data-accordion="false" id="navigation">
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon bi bi-speedometer"></i>
+                        <p>
+                            Dashboard
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#panel-inicio" class="nav-link active">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Dashboard v2</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-persona" class="nav-link">
+                                <i class="nav-icon fa-solid fa-users"></i>
+                                <p>Personas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-perfil" class="nav-link">
+                                <i class="nav-icon fa-solid fa-id-card"></i>
+                                <p>Perfiles</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-rol" class="nav-link">
+                                <i class="nav-icon fa-solid fa-user-tie"></i>
+                                <p>Roles</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-icono" class="nav-link">
+                                <i class="nav-icon fa-solid fa-icons"></i>
+                                <p>Iconos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-rolpermiso" class="nav-link">
+                                <i class="nav-icon fa-solid fa-key"></i>
+                                <p>Roles y Permisos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-categoria" class="nav-link">
+                                <i class="nav-icon fa-solid fa-tags"></i>
+                                <p>Categorías</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-marca" class="nav-link">
+                                <i class="nav-icon fa-solid fa-copyright"></i>
+                                <p>Marcas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-proveedor" class="nav-link">
+                                <i class="nav-icon fa-solid fa-truck-field"></i>
+                                <p>Proveedores</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-descuento" class="nav-link">
+                                <i class="nav-icon fa-solid fa-percent"></i>
+                                <p>Descuentos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-producto" class="nav-link">
+                                <i class="nav-icon fa-solid fa-box"></i>
+                                <p>Productos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-carrito" class="nav-link">
+                                <i class="nav-icon fa-solid fa-cart-shopping"></i>
+                                <p>Carritos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-detallecarrito" class="nav-link">
+                                <i class="nav-icon fa-solid fa-cart-arrow-down"></i>
+                                <p>Detalles Carrito</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-pedido" class="nav-link">
+                                <i class="nav-icon fa-solid fa-file-invoice-dollar"></i>
+                                <p>Pedidos</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-detallepedido" class="nav-link">
+                                <i class="nav-icon fa-solid fa-receipt"></i>
+                                <p>Detalles Pedido</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#panel-pago" class="nav-link">
+                                <i class="nav-icon fa-solid fa-money-bill-wave"></i>
+                                <p>Pagos</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item mt-3 border-top pt-3">
+                    <a href="#" class="nav-link text-warning" data-bs-toggle="modal" data-bs-target="#configuracionModal">
+                        <i class="nav-icon bi bi-gear-fill"></i>
+                        <p>Configuración</p>
+                    </a>
+                </li>
+                <li class="nav-item mt-3 border-top pt-3">
+                    <a href="#" class="nav-link text-danger">
+                        <i class="nav-icon bi bi-gear-fill"></i>
+                        <p>Cerrar sesión</p>
+                    </a>
+                </li>
+
+                <!--end::Sidebar Menu-->
+        </nav>
+    </div>
+    <!--end::Sidebar Wrapper-->
+</aside>
+<!--end::Sidebar-->
