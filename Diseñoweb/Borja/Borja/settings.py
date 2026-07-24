@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'backed',
     'LB_libreria',
     'panel',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

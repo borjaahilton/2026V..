@@ -29,4 +29,5 @@ urlpatterns = [
     path('user_dashboard/', user_dashboard, name='user_dashboard'),
     path('', index, name='login'),
     path('login/', index, name='login_page'),
+    path('api/', include('backed.urls')),
 ]
